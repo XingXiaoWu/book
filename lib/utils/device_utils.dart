@@ -1,8 +1,11 @@
 import 'dart:io';
-import 'package:book/utils/utils.dart';
-import 'package:device_info/device_info.dart';
 
-class DeviceUtils{
+import 'package:uuid/uuid.dart';
+
+import 'package:device_info/device_info.dart';
+import 'utils.dart';
+
+class DeviceUtils {
   const DeviceUtils._();
 
   static final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
@@ -13,11 +16,11 @@ class DeviceUtils{
   static String deviceUuid;
 
   static Future<void> initDeviceInfo() async {
-    // await 
+    await getModel();
+    await getDevicePushToken();
+    await getDeviceUuid();
   }
 
-
-  
   static Future<void> getModel() async {
     if (Platform.isAndroid) {
       deviceInfo = await _deviceInfoPlugin.androidInfo;
