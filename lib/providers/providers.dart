@@ -12,14 +12,6 @@ ChangeNotifierProvider<T> buildProvider<T extends ChangeNotifier>(T value){
 List<Widget> get providers => _providers;
 
 final _providers = [
-  // buildProvider<CoursesProvider>(CoursesProvider()),
-  // buildProvider<DateProvider>(DateProvider()),
-  // buildProvider<MessagesProvider>(MessagesProvider()),
-  // buildProvider<NotificationProvider>(NotificationProvider()),
-  // buildProvider<ReportRecordsProvider>(ReportRecordsProvider()),
-  // buildProvider<ScoresProvider>(ScoresProvider()),
   buildProvider<SettingsProvider>(SettingsProvider()),
-  // buildProvider<SignProvider>(SignProvider()),
   buildProvider<ThemesProvider>(ThemesProvider()),
-  // buildProvider<WebAppsProvider>(WebAppsProvider()),
 ];

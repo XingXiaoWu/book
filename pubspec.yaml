@@ -52,6 +52,7 @@ dependencies:
   event_bus: ^1.1.1
   # 时间
   time: "^1.3.0"
+  
 
 dev_dependencies:
   flutter_test:
