@@ -24,6 +24,7 @@ const bool logMessageSocketPacket = false;
 /// 只在调试模式打印
 void trueDebugPrint(dynamic message) {
   if (Constants.isDebug) {
+    print('$message');
     log('$message');
   }
 }
