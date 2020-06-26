@@ -37,48 +37,48 @@ class NetUtils {
 //     dio.unlock();
 //   }
 
-  static void initConfig() {
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-//      client.findProxy = (uri) => 'PROXY 192.168.0.106:8888';
-      client.badCertificateCallback =
-          (X509Certificate _, String __, int ___) => true;
-    };
-    dio.interceptors.add(cookieManager);
-    dio.interceptors.add(InterceptorsWrapper(
-      onError: (DioError e) {
-        if (logNetworkError) {
-          trueDebugPrint('Dio error with request: ${e.request.uri}');
-          trueDebugPrint('Request data: ${e.request.data}');
-          trueDebugPrint('Dio error: ${e.message}');
-        }
-        if (e?.response?.statusCode == 401) {
-          updateTicket();
-        }
-        return e;
-      },
-    ));
-    (tokenDio.httpClientAdapter as DefaultHttpClientAdapter)
-        .onHttpClientCreate = (HttpClient client) {
-//      client.findProxy = (uri) => 'PROXY 192.168.0.106:8888';
-      client.badCertificateCallback =
-          (X509Certificate _, String __, int ___) => true;
-    };
-    tokenDio.interceptors.add(tokenCookieManager);
-    tokenDio.interceptors.add(InterceptorsWrapper(
-      onError: (DioError e) {
-        if (logNetworkError) {
-          trueDebugPrint('TokenDio error with request: ${e.request.uri}');
-          trueDebugPrint('Request data: ${e.request.data}');
-          trueDebugPrint('TokenDio error: ${e.message}');
-        }
-        if (e?.response?.statusCode == 401) {
-          updateTicket();
-        }
-        return e;
-      },
-    ));
-  }
+//   static void initConfig() {
+//     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+//         (HttpClient client) {
+// //      client.findProxy = (uri) => 'PROXY 192.168.0.106:8888';
+//       client.badCertificateCallback =
+//           (X509Certificate _, String __, int ___) => true;
+//     };
+//     dio.interceptors.add(cookieManager);
+//     dio.interceptors.add(InterceptorsWrapper(
+//       onError: (DioError e) {
+//         if (logNetworkError) {
+//           trueDebugPrint('Dio error with request: ${e.request.uri}');
+//           trueDebugPrint('Request data: ${e.request.data}');
+//           trueDebugPrint('Dio error: ${e.message}');
+//         }
+//         if (e?.response?.statusCode == 401) {
+//           updateTicket();
+//         }
+//         return e;
+//       },
+//     ));
+//     (tokenDio.httpClientAdapter as DefaultHttpClientAdapter)
+//         .onHttpClientCreate = (HttpClient client) {
+// //      client.findProxy = (uri) => 'PROXY 192.168.0.106:8888';
+//       client.badCertificateCallback =
+//           (X509Certificate _, String __, int ___) => true;
+//     };
+//     tokenDio.interceptors.add(tokenCookieManager);
+//     tokenDio.interceptors.add(InterceptorsWrapper(
+//       onError: (DioError e) {
+//         if (logNetworkError) {
+//           trueDebugPrint('TokenDio error with request: ${e.request.uri}');
+//           trueDebugPrint('Request data: ${e.request.data}');
+//           trueDebugPrint('TokenDio error: ${e.message}');
+//         }
+//         if (e?.response?.statusCode == 401) {
+//           updateTicket();
+//         }
+//         return e;
+//       },
+//     ));
+//   }
 
 //   /// Get header only.
 //   static Future<Response<T>> head<T>(

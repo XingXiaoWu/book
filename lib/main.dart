@@ -1,15 +1,21 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:book/constants/hive_boxes.dart';
+import 'dart:ui' as ui;
+import 'package:book/providers/providers.dart';
+import 'package:provider/provider.dart';
+import 'package:time/time.dart';
+import 'package:book/constants/instances.dart';
 import 'package:book/constants/screens.dart';
 import 'package:book/utils/utils.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:hive/hive.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:book/constants/events.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +43,6 @@ void main() async {
     statusBarColor: Colors.transparent,
   ));
   runApp(BookApp());
-  // runApp(MyApp());
 }
 
 class BookApp extends StatefulWidget {
@@ -65,14 +70,84 @@ class _BookAppState extends State<BookApp> {
 
     /// WidgetsBinding.instance.addObserver(this);
     /// 在一加手机上设置默认显示模式以适配90/120赫兹显示
-
-    // if(Platform.isAndroid && DeviceUtils){
-
-    // }
+    // if (Platform.isAndroid &&
+    //       DeviceUtils.deviceModel.toLowerCase().contains('oneplus')) {
+    //     FlutterDisplayMode.setDeviceDefault();
+    //   }
+    // addPostFrameCallback 是 StatefulWidge 渲染结束的回调，
+    // 只会被调用一次，之后 StatefulWidget 需要刷新 UI 也不会被调用，
+    // addPostFrameCallback 的使用方法是在 initState 里添加回调：
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Connectivity().checkConnectivity().then(connectivityHandler);
+    });
+    connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen(connectivityHandler);
   }
+
+  void connectivityHandler(ConnectivityResult result) {
+    checkIfNoConnectivity(result);
+    Instances.eventBus.fire(ConnectivityChangeEvent(result));
+    Instances.connectivityResult = result;
+    trueDebugPrint('Current connectivity: $result');
+  }
+
+  void checkIfNoConnectivity(ConnectivityResult result) {
+    if (result == ConnectivityResult.none) {
+      connectivityToastFuture ??= showNoConnectivityDialog;
+    } else {
+      connectivityToastFuture?.dismiss(showAnim: true);
+      if (connectivityToastFuture != null) {
+        connectivityToastFuture = null;
+      }
+    }
+  }
+
+  ToastFuture get showNoConnectivityDialog => showToastWidget(
+        noConnectivityWidget,
+        duration: 999.weeks,
+        handleTouch: true,
+      );
+
+
+  Widget get noConnectivityWidget => Material(
+        color: Colors.black26,
+        child: BackdropFilter(
+          filter: ui.ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+          child: Center(
+            child: Container(
+              width: Screens.width / 2,
+              height: Screens.width / 2,
+              padding: EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                shape: BoxShape.circle,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.router,
+                    size: Screens.width / 6,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  SizedBox(height: Screens.width / 20),
+                  Text(
+                    '检查网络连接',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .copyWith(fontSize: 20.0),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MultiProvider(providers: providers);
   }
 }

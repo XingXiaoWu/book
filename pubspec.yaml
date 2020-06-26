@@ -36,12 +36,22 @@ dependencies:
   hive: ^1.4.1+1
   # hive_flutter: ^0.3.0+2
   package_info: ^0.4.1
+  # dart的拓展
   dartx: ^0.4.2
+  # 权限判断
   permission_handler: ^5.0.1+1
   path_provider: ^1.6.11
+  # 网络请求
   dio: ^3.0.9
+  # uuid
   uuid: ^2.1.0
   flutter_local_notifications: ^1.4.4+1
+  # 网络状态库
+  connectivity: ^0.4.8+6
+  # 事件主线
+  event_bus: ^1.1.1
+  # 时间
+  time: "^1.3.0"
 
 dev_dependencies:
   flutter_test:
