@@ -56,7 +56,6 @@ class _SplashPageState extends State<SplashPage> {
   
   @override
   void dispose() {
-    // TODO: implement dispose
     cancelTimer();
     super.dispose();
   }

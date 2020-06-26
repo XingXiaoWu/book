@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:book/utils/utils.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
-import 'pages/splash_page.dart';
 import 'providers/settings_provider.dart';
 import 'constants/screens.dart';
 
