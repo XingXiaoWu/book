@@ -1,7 +1,7 @@
 ///
 ///Author: Xing.Wu
 ///Date: 2021-04-02 10:57:14
-///LastEditTime: 2021-04-02 14:19:57
+///LastEditTime: 2021-04-02 14:32:30
 ///LastEditors: Xing.wu
 ///Description: 书城页面
 ///我是阿星，祝你幸福
@@ -31,7 +31,7 @@ class _BookStoreState extends State<BookStore> {
           appBar: AppBar(
             brightness: Brightness.light,
             title: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              // padding: EdgeInsets.symmetric(horizontal: 15),
               child: TabBar(
                 labelColor: AppColor.darkGray,
                 labelStyle:
